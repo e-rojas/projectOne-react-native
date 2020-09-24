@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white'
     }, text: {
         fontSize: 30,
-        maregin: 5
+        margin: 5,
     }
 })
 export default ColorButton;
