@@ -9,34 +9,27 @@ import React from 'react';
    ImageBackground,
    TouchableHighlight
   } from 'react-native' */
-  import { View,Text,StyleSheet,TouchableHighlight ,ScrollView} from 'react-native';
+  import { View,Text,StyleSheet,TouchableHighlight ,ScrollView,FlatList} from 'react-native';
   import ColorButton from './ColorButton';
 class ColorList extends React.Component {
     state = { 
-        backgroundColor:'blue'
+        backgroundColor:'#D1EBF1',
+        availableColors:['#2D90A3','#788D27','#A5A13C','#D6D7C7']
      }
      changeColor(backgroundColor){
 this.setState({backgroundColor})
      }
     render() {
         // Deconstruct the state 
-        const { backgroundColor} = this.state
+        const { backgroundColor,availableColors} = this.state
         return (
             <ScrollView style={[styles.container,{backgroundColor}]} >
-                <ColorButton  backgroundColor='red' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='blue' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='green' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='salmon' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='grey' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='white' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='red' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='blue' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='green' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='salmon' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='grey' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='white' onSelect={(color)=> this.changeColor(color)}/>
-             {/*   <Text onPress={()=> this.changeColor('green')} style={styles.button} >Green</Text>
-               <Text onPress={()=> this.changeColor('red')} style={styles.button} >Red</Text> */}
+            <FlatList
+              data={availableColors}
+              renderItem={({ item }) => <ColorButton  backgroundColor={item} onSelect={(color)=> this.changeColor(color)}/>}
+            />
+               
+               
             </ScrollView>
         );
     }
@@ -57,3 +50,23 @@ const styles = StyleSheet.create({
   })
 
 export default ColorList;
+
+/* 
+
+  state = { 
+        backgroundColor:'blue',
+        availableColor:['yellow','red','blue']
+     }
+     changeColor(backgroundColor){
+this.setState({backgroundColor})
+     }
+    render() {
+        // Deconstruct the state 
+        const { backgroundColor} = this.state
+        return (
+            <FlatList style={[styles.container,{backgroundColor}]} data={this.availableColor} >
+
+                <ColorButton  backgroundColor='red' onSelect={(color)=> this.changeColor(color)}/>
+               
+            </FlatList>
+*/
