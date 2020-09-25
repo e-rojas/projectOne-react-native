@@ -25,7 +25,32 @@ class ColorList extends React.Component {
       name: '#F2C48D'
     }
   }
-componentDidMount(){
+  clearAll = async () => {
+    try {
+      await AsyncStorage.clear()
+    } catch(e) {
+      // clear error
+    }
+  
+    console.log('Done.')
+  }
+   readData = async () => {
+    try {
+      const data = await AsyncStorage.getItem('@ColorListStore')
+     if (data !== null) {
+      this.setState({availableColors:JSON.parse(data)},()=>{
+        console.log('>>>>',this.state.availableColors);
+      })
+     }
+    } catch (e) {
+      alert('Failed to fetch the data from storage')
+    }
+  }
+  componentDidMount(){
+    this.readData()
+    console.log('compoent did mount');
+  }
+/* componentDidMount(){
   AsyncStorage.getItem(
     '@ColorListStore:Colors',
     (err,data)=>{
@@ -41,14 +66,18 @@ componentDidMount(){
       }
     }
   )
-}
+} */
   changeColor(backgroundColor) {
     this.setState({ backgroundColor })
   }
- async saveColors(colors){
+  saveColors = async (colors)=> {
+   
     try {
       const jsonValue = JSON.stringify(colors)
-      await AsyncStorage.setItem('@ColorListStore:Colors', jsonValue)
+      console.log(jsonValue);
+      console.log(JSON.parse(jsonValue));
+     await AsyncStorage.setItem('@ColorListStore', jsonValue)
+    console.log('Data succesfully saved!!!');
     } catch (e) {
       // saving error
       console.log('error saving values',e);
@@ -56,7 +85,9 @@ componentDidMount(){
   }
   newcolor = async (color) => {
     const COLORS = await [...this.state.availableColors, {color,id:ID()}]
-    this.setState({ availableColors: COLORS })
+    this.setState({ availableColors: COLORS },()=>{
+      //console.log(this.state.availableColors);
+    })
     this.saveColors(COLORS)
   }
   render() {
@@ -67,7 +98,7 @@ componentDidMount(){
         <ColorForm onNewColor={this.newcolor} />
         <FlatList
           data={availableColors}
-          renderItem={({ item }) => <ColorButton backgroundColor={item.color} onSelect={(color) => this.changeColor(color)} />}
+          renderItem={({ item }) => <ColorButton key={item.id} backgroundColor={item.color} onSelect={(color) => this.changeColor(color)} />}
           keyExtractor={item => item.id}
         />
 
