@@ -9,39 +9,70 @@ import React from 'react';
    ImageBackground,
    TouchableHighlight
   } from 'react-native' */
-import { View, Text, StyleSheet, TouchableHighlight, ScrollView, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, ScrollView, FlatList,SafeAreaView } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import ColorButton from './ColorButton';
 import ColorForm from './ColorForm';
+const ID = function () {
+  return '_' + Math.random().toString(36).substr(2, 9);
+};
 class ColorList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       backgroundColor: '#D1EBF1',
-      availableColors: ['#2D90A3', '#788D27', '#A5A13C', '#D6D7C7'],
+      availableColors: [],
       name: '#F2C48D'
     }
   }
-
+componentDidMount(){
+  AsyncStorage.getItem(
+    '@ColorListStore:Colors',
+    (err,data)=>{
+      if(err){
+        console.log('error loading colors',err);
+      }else{
+        
+        const allColors = JSON.parse(data)
+        console.log(allColors);
+        this.setState({
+          availableColors:allColors
+        })
+      }
+    }
+  )
+}
   changeColor(backgroundColor) {
     this.setState({ backgroundColor })
   }
-  newcolor = (color) => {
-    const COLORS = [...this.state.availableColors, color]
+ async saveColors(colors){
+    try {
+      const jsonValue = JSON.stringify(colors)
+      await AsyncStorage.setItem('@ColorListStore:Colors', jsonValue)
+    } catch (e) {
+      // saving error
+      console.log('error saving values',e);
+    }
+  }
+  newcolor = async (color) => {
+    const COLORS = await [...this.state.availableColors, {color,id:ID()}]
     this.setState({ availableColors: COLORS })
+    this.saveColors(COLORS)
   }
   render() {
     // Deconstruct the state 
     const { backgroundColor, availableColors } = this.state
     return (
-      <ScrollView style={[styles.container, { backgroundColor }]} >
+      <SafeAreaView style={[styles.container, { backgroundColor }]} >
         <ColorForm onNewColor={this.newcolor} />
         <FlatList
           data={availableColors}
-          renderItem={({ item }) => <ColorButton backgroundColor={item} onSelect={(color) => this.changeColor(color)} />}
+          renderItem={({ item }) => <ColorButton backgroundColor={item.color} onSelect={(color) => this.changeColor(color)} />}
+          keyExtractor={item => item.id}
         />
 
 
-      </ScrollView>
+      </SafeAreaView>
     );
   }
 }
