@@ -6,4 +6,4 @@ expo init AwesomeProject
 
 cd AwesomeProject
 npm start # you can also use: expo start
-![]()
+![](https://github.com/e-rojas/projectOne-react-native/blob/master/assets/rect-native-app.gif)
