@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row'
   },
   txtInput: {
-    width: Dimensions.get('window').width / 2,
+    width: 200 ,
     margin: 5,
     padding: 5,
     borderWidth: 2,

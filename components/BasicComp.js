@@ -6,14 +6,21 @@ import {
     Text,
     StyleSheet,
    Image,
-   ImageBackground
+   ImageBackground,
+   Button
   } from 'react-native'
   // Importing images
 import  MusicImage1 from "../assets/music.jpg";
 import MusicImage2 from '../assets/music2.jpg';
-const BasicComp = () => {
+const BasicComp = ({navigation}) => {
     return (
         <View style={styles.container}>
+           <Button
+      title="Create a color"
+      onPress={() =>
+        navigation.navigate('Profile')
+      }
+    />
         {/* 
         Text with flexbox
         <StatusBar style="auto" />
@@ -39,7 +46,7 @@ const styles = StyleSheet.create({
       backgroundColor: '#DDD',
       flexDirection:'column',
       height:'100vh',
-      padding:'5px'
+      padding:5
       // justifyContent:'space-between'
       
     },footerText:{
@@ -64,22 +71,23 @@ const styles = StyleSheet.create({
       fontWeight: 'bold'
     },
     img:{
-     // width: Dimensions.get('window').width,
-      width:'100%',
+      width: 300,
+      height: 300,
+      
   
       // marginTop:'10px',
       // marginBottom:'10px',
-      flex:1,
+     
       justifyContent:'center',
       alignItems:'center'
     },
     imgTitle:{
-      fontweight:'600px',
+     
       backgroundColor:'rgba(0,0,0,.7)',
-      fontSize:'23px',
+      fontSize:23,
       color:'white',
-      padding:'10px',
-      borderRadius:'5px'
+      padding:10,
+      borderRadius:5
     }
   })
   

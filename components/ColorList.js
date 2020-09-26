@@ -9,7 +9,7 @@ import React from 'react';
    ImageBackground,
    TouchableHighlight
   } from 'react-native' */
-import { View, Text, StyleSheet, TouchableHighlight, ScrollView, FlatList,SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, TouchableHighlight, ScrollView, FlatList, SafeAreaView } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import ColorButton from './ColorButton';
 import ColorForm from './ColorForm';
@@ -28,64 +28,64 @@ class ColorList extends React.Component {
   clearAll = async () => {
     try {
       await AsyncStorage.clear()
-    } catch(e) {
+    } catch (e) {
       // clear error
     }
-  
+
     console.log('Done.')
   }
-   readData = async () => {
+  readData = async () => {
     try {
       const data = await AsyncStorage.getItem('@ColorListStore')
-     if (data !== null) {
-      this.setState({availableColors:JSON.parse(data)},()=>{
-        console.log('>>>>',this.state.availableColors);
-      })
-     }
+      if (data !== null) {
+        this.setState({ availableColors: JSON.parse(data) }, () => {
+          console.log('>>>>', this.state.availableColors);
+        })
+      }
     } catch (e) {
       alert('Failed to fetch the data from storage')
     }
   }
-  componentDidMount(){
+  componentDidMount() {
     this.readData()
     console.log('compoent did mount');
   }
-/* componentDidMount(){
-  AsyncStorage.getItem(
-    '@ColorListStore:Colors',
-    (err,data)=>{
-      if(err){
-        console.log('error loading colors',err);
-      }else{
-        
-        const allColors = JSON.parse(data)
-        console.log(allColors);
-        this.setState({
-          availableColors:allColors
-        })
+  /* componentDidMount(){
+    AsyncStorage.getItem(
+      '@ColorListStore:Colors',
+      (err,data)=>{
+        if(err){
+          console.log('error loading colors',err);
+        }else{
+          
+          const allColors = JSON.parse(data)
+          console.log(allColors);
+          this.setState({
+            availableColors:allColors
+          })
+        }
       }
-    }
-  )
-} */
+    )
+  } */
   changeColor(backgroundColor) {
     this.setState({ backgroundColor })
   }
-  saveColors = async (colors)=> {
-   
+  saveColors = async (colors) => {
+
     try {
       const jsonValue = JSON.stringify(colors)
       console.log(jsonValue);
       console.log(JSON.parse(jsonValue));
-     await AsyncStorage.setItem('@ColorListStore', jsonValue)
-    console.log('Data succesfully saved!!!');
+      await AsyncStorage.setItem('@ColorListStore', jsonValue)
+      console.log('Data succesfully saved!!!');
     } catch (e) {
       // saving error
-      console.log('error saving values',e);
+      console.log('error saving values', e);
     }
   }
   newcolor = async (color) => {
-    const COLORS = await [...this.state.availableColors, {color,id:ID()}]
-    this.setState({ availableColors: COLORS },()=>{
+    const COLORS = await [...this.state.availableColors, { color, id: ID() }]
+    this.setState({ availableColors: COLORS }, () => {
       //console.log(this.state.availableColors);
     })
     this.saveColors(COLORS)

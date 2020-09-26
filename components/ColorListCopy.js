@@ -27,14 +27,7 @@ this.setState({backgroundColor})
                 <ColorButton  backgroundColor='blue' onSelect={(color)=> this.changeColor(color)}/>
                 <ColorButton  backgroundColor='green' onSelect={(color)=> this.changeColor(color)}/>
                 <ColorButton  backgroundColor='salmon' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='grey' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='white' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='red' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='blue' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='green' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='salmon' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='grey' onSelect={(color)=> this.changeColor(color)}/>
-                <ColorButton  backgroundColor='white' onSelect={(color)=> this.changeColor(color)}/>
+               
              {/*   <Text onPress={()=> this.changeColor('green')} style={styles.button} >Green</Text>
                <Text onPress={()=> this.changeColor('red')} style={styles.button} >Red</Text> */}
             </ScrollView>
